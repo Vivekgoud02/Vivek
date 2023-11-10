@@ -1,0 +1,108 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[4]:
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
+# Sample data with meaningful column names
+data = {
+    'Date': ['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05'],
+    'Stock_Price': [500, 505, 610, 808, 712],
+    'Sales_Revenue': [2000, 2200, 2100, 2400, 2300],
+}
+
+# Convert the 'Date' column to a datetime object
+data['Date'] = pd.to_datetime(data['Date'])
+
+# Create a DataFrame
+df = pd.DataFrame(data)
+
+# Function to create a line plot with adjusted date labels
+def create_line_plot(data, x_column, y_columns, labels):
+    for i, y_column in enumerate(y_columns):
+        plt.plot(data[x_column], data[y_column], label=labels[i])
+    
+    plt.xlabel(x_column)
+    plt.ylabel('Values')
+    plt.legend()
+    plt.title('Line Plot')
+    
+    # Adjust the date labels for better visibility
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+    plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=1))
+    plt.xticks(rotation=45)
+    
+    plt.show()
+
+# Call the function to create the line plot
+create_line_plot(df, 'Date', ['Stock_Price', 'Sales_Revenue'], ['Stock Price', 'Sales Revenue'])
+
+
+# In[5]:
+
+
+import matplotlib.pyplot as plt
+
+# Sample data with meaningful category names
+categories = ['Electronics', 'Clothing', 'Home Decor', 'Groceries']
+values = [25, 40, 15, 20]
+colors = ['gold', 'lightcoral', 'lightskyblue', 'lightgreen']
+explode = (0.1, 0, 0, 0)  # Explode the 1st slice (Electronics)
+
+# Create a pie chart
+plt.pie(values, labels=categories, colors=colors, explode=explode, autopct='%1.1f%%', shadow=True, startangle=140)
+
+# Add a title
+plt.title('Sample Pie Chart')
+
+# Display the chart
+plt.axis('equal')  # Equal aspect ratio ensures that the pie is drawn as a circle.
+plt.show()
+
+
+# In[6]:
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Sample data with multiple time periods
+data = {
+    'Date': ['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05'],
+    'Electronics': [5, 10, 8, 12, 7],
+    'Clothing': [8, 12, 10, 15, 10],
+    'Home Decor': [3, 5, 4, 6, 4],
+    'Groceries': [9, 13, 11, 7, 8],
+}
+
+# Convert the 'Date' column to a datetime object
+data['Date'] = pd.to_datetime(data['Date'])
+
+# Create a DataFrame
+df = pd.DataFrame(data)
+
+# Create a stacked bar plot
+plt.figure(figsize=(10, 6))
+plt.bar(df['Date'], df['Electronics'], label='Electronics', color='gold')
+plt.bar(df['Date'], df['Clothing'], label='Clothing', color='lightcoral', bottom=df['Electronics'])
+plt.bar(df['Date'], df['Home Decor'], label='Home Decor', color='lightskyblue', bottom=df['Electronics'] + df['Clothing'])
+plt.bar(df['Date'], df['Groceries'], label='Groceries', color='lightgreen', bottom=df['Electronics'] + df['Clothing'] + df['Home Decor'])
+
+plt.xlabel('Date')
+plt.ylabel('Expenses')
+plt.legend()
+plt.title('Stacked Bar Plot of Expenses Over Time')
+
+plt.show()
+
+
+# In[ ]:
+
+
+
+
+
